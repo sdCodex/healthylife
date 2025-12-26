@@ -11,6 +11,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { StatusBadge } from "@/components/status-badge";
+import { Footer } from "@/components/footer";
 import { 
   Droplet, 
   Heart, 
@@ -341,15 +342,7 @@ export default function SugarCheckerPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white mt-12">
-        <div className="max-w-xl mx-auto px-4 py-4">
-          <p className="text-xs text-slate-500 text-center">
-            This tool provides general information and is not a medical diagnosis.
-            <br />
-            © {new Date().getFullYear()} Healthy Life Campaign
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

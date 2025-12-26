@@ -2,7 +2,13 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,22 +16,47 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { StatusBadge, getStatusType } from "@/components/status-badge";
-import { 
-  Calculator, 
-  Heart, 
+import { Footer } from "@/components/footer";
+import {
+  Calculator,
+  Heart,
   ChevronLeft,
   Info,
   Scale,
   Ruler,
   ArrowRight,
-  RefreshCw
+  RefreshCw,
 } from "lucide-react";
 
 const BMI_CATEGORIES = [
-  { max: 18.5, label: "Underweight", color: "sky", description: "You may need to gain some weight. Consider consulting a healthcare provider." },
-  { max: 25, label: "Normal", color: "emerald", description: "Great! Your weight is within the healthy range. Keep up the good habits!" },
-  { max: 30, label: "Overweight", color: "amber", description: "You may benefit from lifestyle changes. Small steps can make a big difference." },
-  { max: Infinity, label: "Obese", color: "rose", description: "Consider consulting a healthcare provider for personalized guidance." },
+  {
+    max: 18.5,
+    label: "Underweight",
+    color: "sky",
+    description:
+      "You may need to gain some weight. Consider consulting a healthcare provider.",
+  },
+  {
+    max: 25,
+    label: "Normal",
+    color: "emerald",
+    description:
+      "Great! Your weight is within the healthy range. Keep up the good habits!",
+  },
+  {
+    max: 30,
+    label: "Overweight",
+    color: "amber",
+    description:
+      "You may benefit from lifestyle changes. Small steps can make a big difference.",
+  },
+  {
+    max: Infinity,
+    label: "Obese",
+    color: "rose",
+    description:
+      "Consider consulting a healthcare provider for personalized guidance.",
+  },
 ];
 
 export default function BMICalculatorPage() {
@@ -43,7 +74,10 @@ export default function BMICalculatorPage() {
 
   const category = useMemo(() => {
     if (!bmi) return null;
-    return BMI_CATEGORIES.find(c => bmi < c.max) || BMI_CATEGORIES[BMI_CATEGORIES.length - 1];
+    return (
+      BMI_CATEGORIES.find((c) => bmi < c.max) ||
+      BMI_CATEGORIES[BMI_CATEGORIES.length - 1]
+    );
   }, [bmi]);
 
   const handleCalculate = () => {
@@ -70,7 +104,10 @@ export default function BMICalculatorPage() {
                 Healthy Life
               </span>
             </Link>
-            <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 border-emerald-200">
+            <Badge
+              variant="secondary"
+              className="bg-emerald-100 text-emerald-700 border-emerald-200"
+            >
               <Calculator className="w-3 h-3 mr-1" />
               BMI Tool
             </Badge>
@@ -79,7 +116,10 @@ export default function BMICalculatorPage() {
       </header>
 
       <main className="max-w-xl mx-auto px-4 py-8">
-        <Link href="/" className="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 mb-6">
+        <Link
+          href="/"
+          className="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 mb-6"
+        >
           <ChevronLeft className="w-4 h-4 mr-1" />
           Back to Home
         </Link>
@@ -150,7 +190,7 @@ export default function BMICalculatorPage() {
               </div>
 
               <div className="flex gap-3">
-                <Button 
+                <Button
                   onClick={handleCalculate}
                   disabled={!bmi}
                   className="flex-1 bg-emerald-600 hover:bg-emerald-700"
@@ -168,20 +208,27 @@ export default function BMICalculatorPage() {
 
           {/* Result */}
           {showResult && bmi && category && (
-            <Card className={`border-2 ${
-              category.color === "emerald" ? "border-emerald-200 bg-emerald-50" :
-              category.color === "amber" ? "border-amber-200 bg-amber-50" :
-              category.color === "rose" ? "border-rose-200 bg-rose-50" :
-              "border-sky-200 bg-sky-50"
-            }`}>
+            <Card
+              className={`border-2 ${
+                category.color === "emerald"
+                  ? "border-emerald-200 bg-emerald-50"
+                  : category.color === "amber"
+                  ? "border-amber-200 bg-amber-50"
+                  : category.color === "rose"
+                  ? "border-rose-200 bg-rose-50"
+                  : "border-sky-200 bg-sky-50"
+              }`}
+            >
               <CardContent className="pt-6">
                 <div className="text-center space-y-4">
                   <div>
                     <p className="text-sm text-slate-600 mb-1">Your BMI</p>
-                    <p className="text-5xl font-bold tabular-nums text-slate-900">{bmi}</p>
+                    <p className="text-5xl font-bold tabular-nums text-slate-900">
+                      {bmi}
+                    </p>
                   </div>
-                  <StatusBadge 
-                    status={getStatusType(category.color)} 
+                  <StatusBadge
+                    status={getStatusType(category.color)}
                     label={category.label}
                     className="text-base px-4 py-1"
                   />
@@ -196,30 +243,43 @@ export default function BMICalculatorPage() {
           {/* BMI Scale Reference */}
           <Card className="bg-white border-slate-200">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-slate-700">BMI Categories</CardTitle>
+              <CardTitle className="text-sm font-medium text-slate-700">
+                BMI Categories
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
                 {BMI_CATEGORIES.map((cat, i) => (
-                  <div 
-                    key={i} 
+                  <div
+                    key={i}
                     className={`flex items-center justify-between p-2 rounded-lg ${
-                      showResult && category?.label === cat.label ? "ring-2 ring-offset-1 ring-slate-400" : ""
+                      showResult && category?.label === cat.label
+                        ? "ring-2 ring-offset-1 ring-slate-400"
+                        : ""
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <div className={`w-3 h-3 rounded-full ${
-                        cat.color === "emerald" ? "bg-emerald-500" :
-                        cat.color === "amber" ? "bg-amber-500" :
-                        cat.color === "rose" ? "bg-rose-500" :
-                        "bg-sky-500"
-                      }`} />
-                      <span className="text-sm text-slate-700">{cat.label}</span>
+                      <div
+                        className={`w-3 h-3 rounded-full ${
+                          cat.color === "emerald"
+                            ? "bg-emerald-500"
+                            : cat.color === "amber"
+                            ? "bg-amber-500"
+                            : cat.color === "rose"
+                            ? "bg-rose-500"
+                            : "bg-sky-500"
+                        }`}
+                      />
+                      <span className="text-sm text-slate-700">
+                        {cat.label}
+                      </span>
                     </div>
                     <span className="text-sm text-slate-500">
-                      {i === 0 ? `< ${cat.max}` : 
-                       i === BMI_CATEGORIES.length - 1 ? `≥ ${BMI_CATEGORIES[i-1].max}` :
-                       `${BMI_CATEGORIES[i-1].max} - ${cat.max - 0.1}`}
+                      {i === 0
+                        ? `< ${cat.max}`
+                        : i === BMI_CATEGORIES.length - 1
+                        ? `≥ ${BMI_CATEGORIES[i - 1].max}`
+                        : `${BMI_CATEGORIES[i - 1].max} - ${cat.max - 0.1}`}
                     </span>
                   </div>
                 ))}
@@ -232,9 +292,10 @@ export default function BMICalculatorPage() {
             <Info className="h-4 w-4 text-slate-600" />
             <AlertTitle className="text-slate-800">About BMI</AlertTitle>
             <AlertDescription className="text-slate-600">
-              BMI is a screening tool, not a diagnostic measure. It doesn&apos;t account for 
-              muscle mass, bone density, or overall body composition. For a complete 
-              health assessment, consult a healthcare provider.
+              BMI is a screening tool, not a diagnostic measure. It doesn&apos;t
+              account for muscle mass, bone density, or overall body
+              composition. For a complete health assessment, consult a
+              healthcare provider.
             </AlertDescription>
           </Alert>
 
@@ -244,12 +305,18 @@ export default function BMICalculatorPage() {
           <Card className="bg-gradient-to-br from-emerald-500 to-teal-600 border-0 text-white">
             <CardContent className="pt-6">
               <div className="text-center space-y-4">
-                <h3 className="text-xl font-semibold">Want a complete health check?</h3>
+                <h3 className="text-xl font-semibold">
+                  Want a complete health check?
+                </h3>
                 <p className="text-emerald-100 text-sm">
-                  Take our full assessment for personalized risk scores and guidance.
+                  Take our full assessment for personalized risk scores and
+                  guidance.
                 </p>
                 <Link href="/assessment/step-1">
-                  <Button variant="secondary" className="bg-white text-emerald-700 hover:bg-emerald-50 gap-2">
+                  <Button
+                    variant="secondary"
+                    className="bg-white text-emerald-700 hover:bg-emerald-50 gap-2"
+                  >
                     Take Full Assessment
                     <ArrowRight className="w-4 h-4" />
                   </Button>
@@ -261,18 +328,7 @@ export default function BMICalculatorPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white mt-12">
-        <div className="max-w-xl mx-auto px-4 py-4">
-          <p className="text-xs text-slate-500 text-center">
-            This tool provides general information and is not a medical diagnosis.
-            <br />
-            © {new Date().getFullYear()} Healthy Life Campaign
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
-
-
-

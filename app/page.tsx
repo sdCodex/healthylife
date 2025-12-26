@@ -1,12 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { 
-  Heart, 
+import {
+  Heart,
   Calculator,
   ClipboardCheck,
   Activity,
@@ -18,7 +25,8 @@ import {
   HeartPulse,
   Droplet,
   Users,
-  ArrowRight
+  ArrowRight,
+  Github,
 } from "lucide-react";
 import { useAssessment } from "@/lib/assessment-context";
 
@@ -43,15 +51,23 @@ export default function LandingPage() {
                 <span className="text-xl font-bold tracking-tight text-slate-900">
                   Healthy Life
                 </span>
-                <p className="text-xs text-slate-500 -mt-0.5">Health & Wellness Tools</p>
+                <p className="text-xs text-slate-500 -mt-0.5">
+                  Health & Wellness Tools
+                </p>
               </div>
             </Link>
 
             <nav className="hidden md:flex items-center gap-6">
-              <Link href="#tools" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+              <Link
+                href="#tools"
+                className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
+              >
                 Tools
               </Link>
-              <Link href="#assessment" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+              <Link
+                href="#assessment"
+                className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
+              >
                 Assessment
               </Link>
               <Link href="/assessment/step-1" onClick={handleStartAssessment}>
@@ -78,18 +94,26 @@ export default function LandingPage() {
               <span className="block text-emerald-600">starts here</span>
             </h1>
             <p className="text-lg md:text-xl text-slate-600 mb-8 leading-relaxed">
-              Free tools to understand your health better. Calculate your BMI, 
-              assess your health risks, and get personalized guidance — all in one place.
+              Free tools to understand your health better. Calculate your BMI,
+              assess your health risks, and get personalized guidance — all in
+              one place.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/assessment/step-1" onClick={handleStartAssessment}>
-                <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/30 gap-2 w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/30 gap-2 w-full sm:w-auto"
+                >
                   Take Full Assessment
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
               <Link href="/tools/bmi-calculator">
-                <Button size="lg" variant="outline" className="gap-2 w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="gap-2 w-full sm:w-auto"
+                >
                   <Calculator className="w-5 h-5" />
                   Quick BMI Check
                 </Button>
@@ -107,9 +131,14 @@ export default function LandingPage() {
               { icon: Calculator, label: "Instant results", value: "Free" },
               { icon: Users, label: "For everyone", value: "Easy" },
             ].map((stat, i) => (
-              <div key={i} className="bg-white rounded-xl border border-slate-200 p-4 text-center shadow-sm">
+              <div
+                key={i}
+                className="bg-white rounded-xl border border-slate-200 p-4 text-center shadow-sm"
+              >
                 <stat.icon className="w-6 h-6 text-emerald-600 mx-auto mb-2" />
-                <p className="text-lg font-semibold text-slate-900">{stat.value}</p>
+                <p className="text-lg font-semibold text-slate-900">
+                  {stat.value}
+                </p>
                 <p className="text-xs text-slate-500">{stat.label}</p>
               </div>
             ))}
@@ -128,8 +157,8 @@ export default function LandingPage() {
               Quick health calculators
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Use our free tools to get instant insights about your health metrics.
-              No sign-up required, and your data stays on your device.
+              Use our free tools to get instant insights about your health
+              metrics. No sign-up required, and your data stays on your device.
             </p>
           </div>
 
@@ -141,9 +170,12 @@ export default function LandingPage() {
                   <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/30 group-hover:scale-110 transition-transform">
                     <Calculator className="w-7 h-7 text-white" />
                   </div>
-                  <CardTitle className="text-xl text-slate-900">BMI Calculator</CardTitle>
+                  <CardTitle className="text-xl text-slate-900">
+                    BMI Calculator
+                  </CardTitle>
                   <CardDescription className="text-slate-600">
-                    Calculate your Body Mass Index and understand what it means for your health.
+                    Calculate your Body Mass Index and understand what it means
+                    for your health.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -161,9 +193,12 @@ export default function LandingPage() {
                   <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center mb-4 shadow-lg shadow-rose-500/30 group-hover:scale-110 transition-transform">
                     <HeartPulse className="w-7 h-7 text-white" />
                   </div>
-                  <CardTitle className="text-xl text-slate-900">BP Interpreter</CardTitle>
+                  <CardTitle className="text-xl text-slate-900">
+                    BP Interpreter
+                  </CardTitle>
                   <CardDescription className="text-slate-600">
-                    Enter your blood pressure reading and understand if it&apos;s within healthy range.
+                    Enter your blood pressure reading and understand if
+                    it&apos;s within healthy range.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -181,9 +216,12 @@ export default function LandingPage() {
                   <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mb-4 shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform">
                     <Droplet className="w-7 h-7 text-white" />
                   </div>
-                  <CardTitle className="text-xl text-slate-900">Blood Sugar Check</CardTitle>
+                  <CardTitle className="text-xl text-slate-900">
+                    Blood Sugar Check
+                  </CardTitle>
                   <CardDescription className="text-slate-600">
-                    Interpret your blood sugar readings (FBS, RBS, PPBS, or HbA1c) instantly.
+                    Interpret your blood sugar readings (FBS, RBS, PPBS, or
+                    HbA1c) instantly.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -198,7 +236,10 @@ export default function LandingPage() {
       </section>
 
       {/* Full Assessment Section */}
-      <section id="assessment" className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white">
+      <section
+        id="assessment"
+        className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white"
+      >
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -209,15 +250,18 @@ export default function LandingPage() {
                 Complete Health Risk Assessment
               </h2>
               <p className="text-slate-600 mb-8 leading-relaxed">
-                Take our 5-minute comprehensive assessment to understand your health risks 
-                and get personalized recommendations. Based on the Community-Based Assessment 
-                Checklist (CBAC), this tool screens for non-communicable disease risks and 
-                early warning signs.
+                Take our 5-minute comprehensive assessment to understand your
+                health risks and get personalized recommendations. Based on the
+                Community-Based Assessment Checklist (CBAC), this tool screens
+                for non-communicable disease risks and early warning signs.
               </p>
 
               <div className="space-y-4 mb-8">
                 {[
-                  { icon: Calculator, text: "BMI calculation & interpretation" },
+                  {
+                    icon: Calculator,
+                    text: "BMI calculation & interpretation",
+                  },
                   { icon: HeartPulse, text: "Blood pressure & sugar tracking" },
                   { icon: ClipboardCheck, text: "NCD risk scoring (CBAC)" },
                   { icon: Activity, text: "Lifestyle & activity guidance" },
@@ -233,7 +277,10 @@ export default function LandingPage() {
               </div>
 
               <Link href="/assessment/step-1" onClick={handleStartAssessment}>
-                <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 gap-2">
+                <Button
+                  size="lg"
+                  className="bg-emerald-600 hover:bg-emerald-700 gap-2"
+                >
                   Start Full Assessment
                   <ArrowRight className="w-5 h-5" />
                 </Button>
@@ -252,19 +299,48 @@ export default function LandingPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {[
-                    { step: 1, title: "Basic Information", desc: "Age, gender, activity" },
-                    { step: 2, title: "Body Measurements", desc: "Height, weight, vitals" },
-                    { step: 3, title: "Risk Factors", desc: "CBAC questionnaire" },
-                    { step: 4, title: "Lifestyle Check", desc: "Habits & guidance" },
-                    { step: 5, title: "Symptom Screening", desc: "Early warning signs" },
-                    { step: 6, title: "Your Summary", desc: "Results & advice" },
+                    {
+                      step: 1,
+                      title: "Basic Information",
+                      desc: "Age, gender, activity",
+                    },
+                    {
+                      step: 2,
+                      title: "Body Measurements",
+                      desc: "Height, weight, vitals",
+                    },
+                    {
+                      step: 3,
+                      title: "Risk Factors",
+                      desc: "CBAC questionnaire",
+                    },
+                    {
+                      step: 4,
+                      title: "Lifestyle Check",
+                      desc: "Habits & guidance",
+                    },
+                    {
+                      step: 5,
+                      title: "Symptom Screening",
+                      desc: "Early warning signs",
+                    },
+                    {
+                      step: 6,
+                      title: "Your Summary",
+                      desc: "Results & advice",
+                    },
                   ].map((item) => (
-                    <div key={item.step} className="flex items-center gap-4 p-3 rounded-lg bg-slate-50">
+                    <div
+                      key={item.step}
+                      className="flex items-center gap-4 p-3 rounded-lg bg-slate-50"
+                    >
                       <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-semibold text-sm">
                         {item.step}
                       </div>
                       <div>
-                        <p className="font-medium text-slate-900">{item.title}</p>
+                        <p className="font-medium text-slate-900">
+                          {item.title}
+                        </p>
                         <p className="text-xs text-slate-500">{item.desc}</p>
                       </div>
                     </div>
@@ -284,12 +360,21 @@ export default function LandingPage() {
             Your privacy is our priority
           </h2>
           <p className="text-emerald-100 max-w-2xl mx-auto mb-8">
-            We don&apos;t ask for your name, phone number, or any personal identifiers. 
-            All calculations happen on your device, and your data never leaves your browser.
+            We don&apos;t ask for your name, phone number, or any personal
+            identifiers. All calculations happen on your device, and your data
+            never leaves your browser.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            {["No sign-up required", "No data stored", "No tracking", "100% anonymous"].map((item, i) => (
-              <Badge key={i} className="bg-emerald-500/30 text-white border-emerald-400/50 py-1.5 px-3">
+            {[
+              "No sign-up required",
+              "No data stored",
+              "No tracking",
+              "100% anonymous",
+            ].map((item, i) => (
+              <Badge
+                key={i}
+                className="bg-emerald-500/30 text-white border-emerald-400/50 py-1.5 px-3"
+              >
                 {item}
               </Badge>
             ))}
@@ -305,18 +390,50 @@ export default function LandingPage() {
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
                 <Heart className="w-5 h-5 text-white" />
               </div>
-              <span className="text-lg font-semibold text-white">Healthy Life</span>
+              <span className="text-lg font-semibold text-white">
+                Healthy Life
+              </span>
             </div>
             <p className="text-sm text-center md:text-right">
-              This tool provides general health information and is not a medical diagnosis.
+              This tool provides general health information and is not a medical
+              diagnosis.
               <br />
               Always consult a healthcare professional for medical advice.
             </p>
           </div>
           <Separator className="my-8 bg-slate-800" />
-          <p className="text-center text-sm">
-            © {new Date().getFullYear()} Healthy Life Campaign. All tools are free to use.
-          </p>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-sm text-center md:text-left">
+              © {new Date().getFullYear()} Healthy Life Campaign. All tools are
+              free to use.
+            </p>
+            <div className="flex items-center gap-4">
+              <Link
+                href="https://ohc.network?utm_source=healthylife&utm_medium=footer&utm_campaign=landing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-opacity hover:opacity-80"
+              >
+                <Image
+                  src="/ohc-logo.svg"
+                  alt="Open Healthcare Network"
+                  width={80}
+                  height={30}
+                  priority={false}
+                  className="brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
+                />
+              </Link>
+              <Link
+                href="https://github.com/ohcnetwork/healthylife?utm_source=healthylife&utm_medium=footer&utm_campaign=landing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-400 hover:text-white transition-colors"
+                aria-label="View source on GitHub"
+              >
+                <Github className="size-6" />
+              </Link>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
