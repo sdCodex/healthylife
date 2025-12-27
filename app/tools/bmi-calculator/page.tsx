@@ -38,7 +38,7 @@ const BMI_CATEGORIES = [
   },
   {
     max: 25,
-    label: "Normal",
+    label: "Normal range",
     color: "emerald",
     description:
       "Great! Your weight is within the healthy range. Keep up the good habits!",
@@ -51,11 +51,25 @@ const BMI_CATEGORIES = [
       "You may benefit from lifestyle changes. Small steps can make a big difference.",
   },
   {
-    max: Infinity,
-    label: "Obese",
+    max: 35,
+    label: "Obese class I",
+    color: "orange",
+    description:
+      "Consider consulting a healthcare provider for personalized guidance and weight management strategies.",
+  },
+  {
+    max: 40,
+    label: "Obese class II",
     color: "rose",
     description:
-      "Consider consulting a healthcare provider for personalized guidance.",
+      "It's important to consult a healthcare provider for comprehensive health assessment and support.",
+  },
+  {
+    max: Infinity,
+    label: "Obese class III",
+    color: "red",
+    description:
+      "Please consult a healthcare provider urgently for specialized medical guidance and intervention.",
   },
 ];
 
@@ -108,7 +122,7 @@ export default function BMICalculatorPage() {
               variant="secondary"
               className="bg-emerald-100 text-emerald-700 border-emerald-200"
             >
-              <Calculator className="w-3 h-3 mr-1" />
+              <Calculator className="size-3 mr-1" />
               BMI Tool
             </Badge>
           </div>
@@ -209,15 +223,7 @@ export default function BMICalculatorPage() {
           {/* Result */}
           {showResult && bmi && category && (
             <Card
-              className={`border-2 ${
-                category.color === "emerald"
-                  ? "border-emerald-200 bg-emerald-50"
-                  : category.color === "amber"
-                    ? "border-amber-200 bg-amber-50"
-                    : category.color === "rose"
-                      ? "border-rose-200 bg-rose-50"
-                      : "border-sky-200 bg-sky-50"
-              }`}
+              className={`border-2 border-${category.color}-200 bg-${category.color}-50`}
             >
               <CardContent className="pt-6">
                 <div className="text-center space-y-4">
@@ -242,7 +248,7 @@ export default function BMICalculatorPage() {
 
           {/* BMI Scale Reference */}
           <Card className="bg-white border-slate-200">
-            <CardHeader className="pb-3">
+            <CardHeader>
               <CardTitle className="text-sm font-medium text-slate-700">
                 BMI Categories
               </CardTitle>
@@ -252,7 +258,7 @@ export default function BMICalculatorPage() {
                 {BMI_CATEGORIES.map((cat, i) => (
                   <div
                     key={i}
-                    className={`flex items-center justify-between p-2 rounded-lg ${
+                    className={`flex items-center justify-between p-2 rounded-md ${
                       showResult && category?.label === cat.label
                         ? "ring-2 ring-offset-1 ring-slate-400"
                         : ""
@@ -260,15 +266,7 @@ export default function BMICalculatorPage() {
                   >
                     <div className="flex items-center gap-2">
                       <div
-                        className={`w-3 h-3 rounded-full ${
-                          cat.color === "emerald"
-                            ? "bg-emerald-500"
-                            : cat.color === "amber"
-                              ? "bg-amber-500"
-                              : cat.color === "rose"
-                                ? "bg-rose-500"
-                                : "bg-sky-500"
-                        }`}
+                        className={`size-3 rounded-full shrink-0 bg-${cat.color}-500`}
                       />
                       <span className="text-sm text-slate-700">
                         {cat.label}

@@ -32,9 +32,10 @@ import {
   ArrowRight,
   RefreshCw,
   CheckCircle2,
+  AlertTriangle,
 } from "lucide-react";
 
-type SugarType = "fbs" | "rbs" | "hba1c";
+type SugarType = "fbs" | "rbs" | "ppbs" | "hba1c";
 
 const SUGAR_TESTS = [
   {
@@ -42,31 +43,79 @@ const SUGAR_TESTS = [
     label: "Fasting Blood Sugar (FBS)",
     unit: "mg/dL",
     description: "Measured after 8+ hours of fasting",
+    ranges: [
+      { label: "Normal", value: "70-99 mg/dL", color: "emerald" },
+      { label: "Pre", value: "100-125 mg/dL", color: "amber" },
+      { label: "High", value: "≥126 mg/dL", color: "rose" },
+    ],
   },
   {
     value: "rbs",
     label: "Random Blood Sugar (RBS)",
     unit: "mg/dL",
     description: "Measured at any time of day",
+    ranges: [
+      { label: "Normal", value: "<140 mg/dL", color: "emerald" },
+      { label: "High", value: "≥200 mg/dL", color: "rose" },
+    ],
+  },
+  {
+    value: "ppbs",
+    label: "2-hour PPBS",
+    unit: "mg/dL",
+    description: "Measured 2 hours after a meal",
+    ranges: [
+      { label: "Normal", value: "<140 mg/dL", color: "emerald" },
+      { label: "Pre", value: "140-199 mg/dL", color: "amber" },
+      { label: "High", value: "≥200 mg/dL", color: "rose" },
+    ],
   },
   {
     value: "hba1c",
     label: "HbA1c",
     unit: "%",
     description: "Average blood sugar over 2-3 months",
+    ranges: [
+      { label: "Normal", value: "<5.7%", color: "emerald" },
+      { label: "Pre", value: "5.7-6.4%", color: "amber" },
+      { label: "High", value: "<6.5%", color: "rose" },
+    ],
   },
 ];
 
 const SUGAR_THRESHOLDS = {
-  fbs: { normal: 100, prediabetes: 126 },
-  rbs: { normal: 140, prediabetes: 200 },
+  fbs: { hypoglycaemia: 70, normal: 99, prediabetes: 126 },
+  rbs: { hypoglycaemia: 70, normal: 140, diabetes: 200 },
+  ppbs: { hypoglycaemia: 70, normal: 139, prediabetes: 200 },
   hba1c: { normal: 5.7, prediabetes: 6.5 },
 };
 
 const getResult = (type: SugarType, value: number) => {
   const thresholds = SUGAR_THRESHOLDS[type];
 
-  if (value < thresholds.normal) {
+  // Hypoglycaemia check (not for HbA1c)
+  if (
+    type !== "hba1c" &&
+    "hypoglycaemia" in thresholds &&
+    value < thresholds.hypoglycaemia
+  ) {
+    return {
+      status: "low" as const,
+      label: "Hypoglycaemia",
+      color: "blue",
+      description:
+        "Your blood sugar is too low. This can be dangerous and requires immediate attention.",
+      tips: [
+        "Consume quick-acting carbohydrates (juice, candy)",
+        "Recheck blood sugar after 15 minutes",
+        "Seek medical help if symptoms persist",
+        "Discuss with your doctor to adjust medication",
+      ],
+    };
+  }
+
+  // Normal range
+  if (value <= thresholds.normal) {
     return {
       status: "normal" as const,
       label: "Normal",
@@ -78,10 +127,45 @@ const getResult = (type: SugarType, value: number) => {
         "Continue regular check-ups",
       ],
     };
-  } else if (value < thresholds.prediabetes) {
+  }
+
+  // RBS special case (no pre-diabetes)
+  if (type === "rbs" && "diabetes" in thresholds) {
+    if (value < thresholds.diabetes) {
+      return {
+        status: "elevated" as const,
+        label: "Elevated",
+        color: "amber",
+        description:
+          "Your random blood sugar is elevated. Consider getting a fasting test or HbA1c for better assessment.",
+        tips: [
+          "Get a fasting blood sugar test",
+          "Consider HbA1c test for accurate diagnosis",
+          "Monitor your blood sugar levels",
+          "Consult a healthcare provider",
+        ],
+      };
+    }
+    return {
+      status: "high" as const,
+      label: "Diabetes Mellitus",
+      color: "rose",
+      description:
+        "Your blood sugar is in the diabetes range. Please consult a doctor for proper diagnosis.",
+      tips: [
+        "Consult a doctor immediately",
+        "Get confirmatory tests (FBS or HbA1c)",
+        "Follow prescribed treatment",
+        "Monitor blood sugar regularly",
+      ],
+    };
+  }
+
+  // Pre-diabetes range (FBS, PPBS, HbA1c)
+  if ("prediabetes" in thresholds && value < thresholds.prediabetes) {
     return {
       status: "elevated" as const,
-      label: "Pre-diabetes Range",
+      label: "Pre-diabetes",
       color: "amber",
       description:
         "Your blood sugar is higher than normal. Lifestyle changes can help prevent diabetes.",
@@ -92,21 +176,28 @@ const getResult = (type: SugarType, value: number) => {
         "Consult a healthcare provider",
       ],
     };
-  } else {
-    return {
-      status: "high" as const,
-      label: "Diabetes Range",
-      color: "rose",
-      description:
-        "Your blood sugar is in the diabetes range. Please consult a doctor for proper diagnosis.",
-      tips: [
-        "Consult a doctor for diagnosis",
-        "Get additional tests done",
-        "Follow prescribed treatment",
-        "Monitor blood sugar regularly",
-      ],
-    };
   }
+
+  return {
+    status: "high" as const,
+    label: "Diabetes Mellitus",
+    color: "rose",
+    description:
+      "Your blood sugar is in the diabetes range. Please consult a doctor for proper diagnosis.",
+    tips: [
+      "Consult a doctor for diagnosis",
+      "Get additional tests done",
+      "Follow prescribed treatment",
+      "Monitor blood sugar regularly",
+    ],
+  };
+};
+
+const MAX_VALUES = {
+  fbs: 400,
+  rbs: 400,
+  ppbs: 400,
+  hba1c: 15,
 };
 
 export default function SugarCheckerPage() {
@@ -116,10 +207,20 @@ export default function SugarCheckerPage() {
 
   const selectedTest = SUGAR_TESTS.find((t) => t.value === testType);
 
+  const isValueTooHigh = useMemo(() => {
+    if (!testType || !value) return false;
+    const numValue = parseFloat(value);
+    if (isNaN(numValue)) return false;
+    return numValue > MAX_VALUES[testType as SugarType];
+  }, [testType, value]);
+
   const result = useMemo(() => {
     if (!testType || !value) return null;
     const numValue = parseFloat(value);
     if (isNaN(numValue) || numValue <= 0) return null;
+
+    if (numValue > MAX_VALUES[testType as SugarType]) return null;
+
     return getResult(testType as SugarType, numValue);
   }, [testType, value]);
 
@@ -239,6 +340,16 @@ export default function SugarCheckerPage() {
                     }}
                     className="text-lg"
                   />
+                  {isValueTooHigh && (
+                    <Alert className="bg-amber-50 border-amber-200">
+                      <AlertTriangle className="size-4 text-amber-600" />
+                      <AlertDescription className="text-amber-800 text-sm">
+                        This value seems unusually high. Please double-check
+                        your reading or consult a healthcare provider
+                        immediately.
+                      </AlertDescription>
+                    </Alert>
+                  )}
                 </div>
               )}
 
@@ -262,13 +373,7 @@ export default function SugarCheckerPage() {
           {/* Result */}
           {showResult && result && (
             <Card
-              className={`border-2 ${
-                result.color === "emerald"
-                  ? "border-emerald-200 bg-emerald-50"
-                  : result.color === "amber"
-                    ? "border-amber-200 bg-amber-50"
-                    : "border-rose-200 bg-rose-50"
-              }`}
+              className={`border-2 border-${result.color}-200 bg-${result.color}-50`}
             >
               <CardContent className="pt-6">
                 <div className="text-center space-y-4">
@@ -303,13 +408,7 @@ export default function SugarCheckerPage() {
                           className="flex items-start gap-2 text-sm text-slate-600"
                         >
                           <CheckCircle2
-                            className={`w-4 h-4 mt-0.5 flex-shrink-0 ${
-                              result.color === "emerald"
-                                ? "text-emerald-600"
-                                : result.color === "amber"
-                                  ? "text-amber-600"
-                                  : "text-rose-600"
-                            }`}
+                            className={`size-4 mt-0.5 shrink-0 text-${result.color}-600`}
                           />
                           {tip}
                         </li>
@@ -330,52 +429,41 @@ export default function SugarCheckerPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {SUGAR_TESTS.map((test) => {
-                  const thresholds = SUGAR_THRESHOLDS[test.value as SugarType];
-                  return (
+                {SUGAR_TESTS.map((test) => (
+                  <div
+                    key={test.value}
+                    className={`p-3 rounded-lg ${
+                      testType === test.value
+                        ? "bg-amber-50 ring-1 ring-amber-200"
+                        : "bg-slate-50"
+                    }`}
+                  >
+                    <p className="font-medium text-slate-800 text-sm mb-2">
+                      {test.label}
+                    </p>
                     <div
-                      key={test.value}
-                      className={`p-3 rounded-lg ${
-                        testType === test.value
-                          ? "bg-amber-50 ring-1 ring-amber-200"
-                          : "bg-slate-50"
-                      }`}
+                      className={`grid grid-cols-${test.ranges.length} gap-2 text-xs`}
                     >
-                      <p className="font-medium text-slate-800 text-sm mb-2">
-                        {test.label}
-                      </p>
-                      <div className="grid grid-cols-3 gap-2 text-xs">
-                        <div className="flex items-center gap-1">
-                          <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                      {test.ranges.map((range, idx) => (
+                        <div key={idx} className="flex items-center gap-1">
+                          <div
+                            className={`size-2 rounded-full bg-${range.color}-500 shrink-0`}
+                          />
                           <span className="text-slate-600">
-                            Normal: &lt;{thresholds.normal}
+                            {range.label}: {range.value}
                           </span>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <div className="w-2 h-2 rounded-full bg-amber-500" />
-                          <span className="text-slate-600">
-                            Pre: {thresholds.normal}-
-                            {thresholds.prediabetes -
-                              (test.value === "hba1c" ? 0.1 : 1)}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <div className="w-2 h-2 rounded-full bg-rose-500" />
-                          <span className="text-slate-600">
-                            High: ≥{thresholds.prediabetes}
-                          </span>
-                        </div>
-                      </div>
+                      ))}
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>
 
           {/* Info Alert */}
           <Alert className="bg-slate-100 border-slate-200">
-            <Info className="h-4 w-4 text-slate-600" />
+            <Info className="size-4 text-slate-600" />
             <AlertTitle className="text-slate-800">Important Note</AlertTitle>
             <AlertDescription className="text-slate-600">
               A single reading isn&apos;t enough for diagnosis. Diabetes is

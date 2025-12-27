@@ -30,10 +30,30 @@ import {
 
 const BP_CATEGORIES = [
   {
+    id: "hypotension",
+    label: "Hypotension",
+    systolicRange: "< 90",
+    diastolicRange: "and/or < 60",
+    systolicMax: 90,
+    diastolicMax: 60,
+    color: "amber",
+    status: "elevated" as const,
+    description:
+      "Your blood pressure is low. This may cause dizziness or fainting.",
+    tips: [
+      "Stay hydrated",
+      "Avoid sudden position changes",
+      "Consult a doctor if symptoms persist",
+      "Consider dietary changes",
+    ],
+  },
+  {
     id: "normal",
     label: "Normal",
-    systolicMax: 120,
-    diastolicMax: 80,
+    systolicRange: "< 140",
+    diastolicRange: "and < 90",
+    systolicMax: 140,
+    diastolicMax: 90,
     color: "emerald",
     status: "normal" as const,
     description:
@@ -46,25 +66,12 @@ const BP_CATEGORIES = [
     ],
   },
   {
-    id: "elevated",
-    label: "Elevated",
-    systolicMax: 130,
-    diastolicMax: 80,
-    color: "amber",
-    status: "elevated" as const,
-    description:
-      "Your blood pressure is slightly elevated. Lifestyle changes may help.",
-    tips: [
-      "Reduce sodium intake",
-      "Increase physical activity",
-      "Manage stress levels",
-    ],
-  },
-  {
     id: "high1",
-    label: "High (Stage 1)",
-    systolicMax: 140,
-    diastolicMax: 90,
+    label: "Stage 1 Hypertension",
+    systolicRange: "140-159",
+    diastolicRange: "or 90-99",
+    systolicMax: 159,
+    diastolicMax: 99,
     color: "amber",
     status: "elevated" as const,
     description:
@@ -73,11 +80,14 @@ const BP_CATEGORIES = [
       "Consult a doctor",
       "Monitor BP regularly",
       "Consider medication if advised",
+      "Reduce sodium intake",
     ],
   },
   {
     id: "high2",
-    label: "High (Stage 2)",
+    label: "Stage 2 Hypertension",
+    systolicRange: "≥ 160",
+    diastolicRange: "or ≥ 100",
     systolicMax: 180,
     diastolicMax: 120,
     color: "rose",
@@ -88,11 +98,14 @@ const BP_CATEGORIES = [
       "See a doctor promptly",
       "Follow prescribed treatment",
       "Monitor daily",
+      "Immediate lifestyle changes needed",
     ],
   },
   {
     id: "crisis",
     label: "Hypertensive Crisis",
+    systolicRange: "≥ 180",
+    diastolicRange: "and/or ≥ 120",
     systolicMax: Infinity,
     diastolicMax: Infinity,
     color: "rose",
@@ -112,21 +125,31 @@ export default function BPCheckerPage() {
   const [diastolic, setDiastolic] = useState<string>("");
   const [showResult, setShowResult] = useState(false);
 
+  const isInvalidRange = useMemo(() => {
+    const sys = parseInt(systolic);
+    const dia = parseInt(diastolic);
+    if (!sys && !dia) return false;
+
+    return sys > 250 || dia > 150;
+  }, [systolic, diastolic]);
+
   const result = useMemo(() => {
     const sys = parseInt(systolic);
     const dia = parseInt(diastolic);
     if (!sys || !dia || sys <= 0 || dia <= 0) return null;
 
-    // Crisis
-    if (sys > 180 || dia > 120) return BP_CATEGORIES[4];
-    // High Stage 2
-    if (sys >= 140 || dia >= 90) return BP_CATEGORIES[3];
-    // High Stage 1
-    if (sys >= 130 || dia >= 80) return BP_CATEGORIES[2];
-    // Elevated
-    if (sys >= 120 && dia < 80) return BP_CATEGORIES[1];
+    // Hypertensive Crisis
+    if (sys >= 180 || dia >= 120) return BP_CATEGORIES[4];
+    // Stage 2 Hypertension
+    if (sys >= 160 || dia >= 100) return BP_CATEGORIES[3];
+    // Stage 1 Hypertension
+    if ((sys >= 140 && sys <= 159) || (dia >= 90 && dia <= 99))
+      return BP_CATEGORIES[2];
     // Normal
-    return BP_CATEGORIES[0];
+    if (sys < 140 && dia < 90 && sys >= 90 && dia >= 60)
+      return BP_CATEGORIES[1];
+    // Hypotension
+    if (sys < 90 || dia < 60) return BP_CATEGORIES[0];
   }, [systolic, diastolic]);
 
   const handleCheck = () => {
@@ -203,7 +226,7 @@ export default function BPCheckerPage() {
             <CardContent className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="systolic">Systolic (top number)</Label>
+                  <Label htmlFor="systolic">Systolic (top no.)</Label>
                   <Input
                     id="systolic"
                     type="number"
@@ -219,7 +242,7 @@ export default function BPCheckerPage() {
                   <p className="text-xs text-slate-500 text-center">mmHg</p>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="diastolic">Diastolic (bottom number)</Label>
+                  <Label htmlFor="diastolic">Diastolic (bottom no.)</Label>
                   <Input
                     id="diastolic"
                     type="number"
@@ -236,10 +259,22 @@ export default function BPCheckerPage() {
                 </div>
               </div>
 
+              {isInvalidRange && (
+                <Alert className="bg-amber-50 border-amber-300">
+                  <AlertTriangle className="size-4 text-amber-600" />
+                  <AlertDescription className="text-amber-800">
+                    The values you entered seem unusually high (Systolic &gt;
+                    250 or Diastolic &gt; 150). Please double-check your BP
+                    monitor reading. If the values are correct, seek immediate
+                    medical attention.
+                  </AlertDescription>
+                </Alert>
+              )}
+
               <div className="flex gap-3">
                 <Button
                   onClick={handleCheck}
-                  disabled={!result}
+                  disabled={!result || isInvalidRange}
                   className="flex-1 bg-rose-600 hover:bg-rose-700"
                 >
                   Check Reading
@@ -338,13 +373,13 @@ export default function BPCheckerPage() {
               <div className="space-y-2 text-sm">
                 <div className="grid grid-cols-3 text-xs text-slate-500 pb-2 border-b">
                   <span>Category</span>
-                  <span className="text-center">Systolic</span>
-                  <span className="text-center">Diastolic</span>
+                  <span className="text-center">Systolic (mmHg)</span>
+                  <span className="text-center">Diastolic (mmHg)</span>
                 </div>
-                {BP_CATEGORIES.slice(0, 4).map((cat, i) => (
+                {BP_CATEGORIES.map((cat) => (
                   <div
-                    key={i}
-                    className={`grid grid-cols-3 items-center py-2 rounded-lg ${
+                    key={cat.id}
+                    className={`grid grid-cols-3 items-center py-2 rounded-md pl-2 ${
                       showResult && result?.id === cat.id
                         ? "bg-slate-100 ring-1 ring-slate-300"
                         : ""
@@ -352,27 +387,15 @@ export default function BPCheckerPage() {
                   >
                     <div className="flex items-center gap-2">
                       <div
-                        className={`w-2.5 h-2.5 rounded-full ${
-                          cat.color === "emerald"
-                            ? "bg-emerald-500"
-                            : cat.color === "amber"
-                              ? "bg-amber-500"
-                              : "bg-rose-500"
-                        }`}
+                        className={`size-2.5 rounded-full bg-${cat.color}-500 shrink-0`}
                       />
                       <span className="text-slate-700">{cat.label}</span>
                     </div>
                     <span className="text-slate-500 text-center">
-                      {i === 0
-                        ? `< ${cat.systolicMax}`
-                        : `${BP_CATEGORIES[i - 1].systolicMax}-${cat.systolicMax - 1}`}
+                      {cat.systolicRange}
                     </span>
                     <span className="text-slate-500 text-center">
-                      {i === 0
-                        ? `< ${cat.diastolicMax}`
-                        : i === 1
-                          ? `< ${cat.diastolicMax}`
-                          : `${BP_CATEGORIES[i - 1].diastolicMax}-${cat.diastolicMax - 1}`}
+                      {cat.diastolicRange}
                     </span>
                   </div>
                 ))}
@@ -382,7 +405,7 @@ export default function BPCheckerPage() {
 
           {/* Info Alert */}
           <Alert className="bg-slate-100 border-slate-200">
-            <Info className="h-4 w-4 text-slate-600" />
+            <Info className="size-4 text-slate-600" />
             <AlertTitle className="text-slate-800">
               Tips for accurate readings
             </AlertTitle>

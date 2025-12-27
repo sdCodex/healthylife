@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, AlertCircle, AlertTriangle, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type StatusType = "normal" | "elevated" | "high" | "info" | "muted";
+type StatusType = "normal" | "elevated" | "high" | "low" | "info" | "muted";
 
 interface StatusBadgeProps {
   status: StatusType;
@@ -23,6 +23,10 @@ const statusConfig = {
   high: {
     className: "bg-rose-50 text-rose-900 border-rose-200",
     Icon: AlertCircle,
+  },
+  low: {
+    className: "bg-blue-50 text-blue-900 border-blue-200",
+    Icon: AlertTriangle,
   },
   info: {
     className: "bg-sky-50 text-sky-900 border-sky-200",
