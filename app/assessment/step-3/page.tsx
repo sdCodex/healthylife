@@ -150,9 +150,7 @@ export default function Step3Page() {
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">
             {t("step3_title")}
           </h1>
-          <p className="text-sm text-slate-600 mt-1">
-            {t("step3_subtitle")}
-          </p>
+          <p className="text-sm text-slate-600 mt-1">{t("step3_subtitle")}</p>
         </div>
 
         <Card className="bg-white border border-slate-200 shadow-sm">
@@ -160,9 +158,7 @@ export default function Step3Page() {
             <CardTitle className="text-base font-semibold">
               {t("step3_card_title")}
             </CardTitle>
-            <CardDescription>
-              {t("step3_card_description")}
-            </CardDescription>
+            <CardDescription>{t("step3_card_description")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Tobacco Use */}
@@ -300,13 +296,17 @@ export default function Step3Page() {
                     }
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder={t("step3_waist_select_placeholder")} />
+                      <SelectValue
+                        placeholder={t("step3_waist_select_placeholder")}
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="female">
                         {t("step3_waist_use_female")}
                       </SelectItem>
-                      <SelectItem value="male">{t("step3_waist_use_male")}</SelectItem>
+                      <SelectItem value="male">
+                        {t("step3_waist_use_male")}
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <p className="text-xs text-slate-500">
@@ -325,7 +325,11 @@ export default function Step3Page() {
                 />
                 {waistThreshold && (
                   <p className="text-xs text-slate-500">
-                    {t("step3_waist_thresholds", { low: waistThreshold.low.toString(), lowPlus: (waistThreshold.low + 1).toString(), high: waistThreshold.high.toString() })}
+                    {t("step3_waist_thresholds", {
+                      low: waistThreshold.low.toString(),
+                      lowPlus: (waistThreshold.low + 1).toString(),
+                      high: waistThreshold.high.toString(),
+                    })}
                   </p>
                 )}
               </div>
@@ -347,8 +351,16 @@ export default function Step3Page() {
                 className="space-y-2"
               >
                 {[
-                  { value: "no", label: t("step3_family_history_no"), score: 0 },
-                  { value: "yes", label: t("step3_family_history_yes"), score: 2 },
+                  {
+                    value: "no",
+                    label: t("step3_family_history_no"),
+                    score: 0,
+                  },
+                  {
+                    value: "yes",
+                    label: t("step3_family_history_yes"),
+                    score: 2,
+                  },
                 ].map((option) => (
                   <label
                     key={option.value}
@@ -379,14 +391,20 @@ export default function Step3Page() {
           <CardContent className="pt-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-slate-600">{t("step3_score_label")}</p>
+                <p className="text-sm text-slate-600">
+                  {t("step3_score_label")}
+                </p>
                 <p className="text-3xl font-semibold tabular-nums text-slate-900">
                   {currentScore}
                 </p>
               </div>
               <StatusBadge
                 status={isHighRisk ? "elevated" : "normal"}
-                label={isHighRisk ? t("step3_score_higher_risk") : t("step3_score_lower_risk")}
+                label={
+                  isHighRisk
+                    ? t("step3_score_higher_risk")
+                    : t("step3_score_lower_risk")
+                }
               />
             </div>
             <p className="text-xs text-slate-500 mt-2">

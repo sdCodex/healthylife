@@ -284,9 +284,7 @@ export default function SugarCheckerPage() {
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 mb-2">
               {t("tool_sugar_title")}
             </h1>
-            <p className="text-slate-600">
-              {t("tool_sugar_subtitle")}
-            </p>
+            <p className="text-slate-600">{t("tool_sugar_subtitle")}</p>
           </div>
 
           {/* Input Card */}
@@ -311,7 +309,9 @@ export default function SugarCheckerPage() {
                   }}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder={t("step2_sugar_test_placeholder")} />
+                    <SelectValue
+                      placeholder={t("step2_sugar_test_placeholder")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
                     {SUGAR_TESTS.map((test) => (
@@ -332,13 +332,17 @@ export default function SugarCheckerPage() {
 
               {testType && (
                 <div className="space-y-2">
-                  <Label htmlFor="value">{t("step2_sugar_value")} ({selectedTest?.unit})</Label>
+                  <Label htmlFor="value">
+                    {t("step2_sugar_value")} ({selectedTest?.unit})
+                  </Label>
                   <Input
                     id="value"
                     type="number"
                     inputMode="decimal"
                     placeholder={
-                      testType === "hba1c" ? t("step2_sugar_value_placeholder_hba1c") : t("step2_sugar_value_placeholder")
+                      testType === "hba1c"
+                        ? t("step2_sugar_value_placeholder_hba1c")
+                        : t("step2_sugar_value_placeholder")
                     }
                     value={value}
                     onChange={(e) => {
@@ -380,7 +384,8 @@ export default function SugarCheckerPage() {
             <Card
               className={cn(
                 "border-2",
-                result.color === "emerald" && "border-emerald-200 bg-emerald-50",
+                result.color === "emerald" &&
+                  "border-emerald-200 bg-emerald-50",
                 result.color === "amber" && "border-amber-200 bg-amber-50",
                 result.color === "rose" && "border-rose-200 bg-rose-50",
                 result.color === "blue" && "border-blue-200 bg-blue-50"
@@ -486,7 +491,9 @@ export default function SugarCheckerPage() {
           {/* Info Alert */}
           <Alert className="bg-slate-100 border-slate-200">
             <Info className="size-4 text-slate-600" />
-            <AlertTitle className="text-slate-800">{t("tool_sugar_note_title")}</AlertTitle>
+            <AlertTitle className="text-slate-800">
+              {t("tool_sugar_note_title")}
+            </AlertTitle>
             <AlertDescription className="text-slate-600">
               {t("tool_sugar_note_description")}
             </AlertDescription>
@@ -498,9 +505,7 @@ export default function SugarCheckerPage() {
           <Card className="bg-gradient-to-br from-emerald-500 to-teal-600 border-0 text-white">
             <CardContent className="pt-6">
               <div className="text-center space-y-4">
-                <h3 className="text-xl font-semibold">
-                  {t("tool_cta_title")}
-                </h3>
+                <h3 className="text-xl font-semibold">{t("tool_cta_title")}</h3>
                 <p className="text-emerald-100 text-sm">
                   {t("tool_cta_description")}
                 </p>

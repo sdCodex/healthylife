@@ -16,7 +16,9 @@ export function Footer() {
           <p className="text-xs text-slate-500 text-center">
             {t("footer_awareness")}
             <br />
-            {t("footer_copyright", { year: new Date().getFullYear().toString() })}
+            {t("footer_copyright", {
+              year: new Date().getFullYear().toString(),
+            })}
           </p>
 
           {/* Logo and GitHub link */}

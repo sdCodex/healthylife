@@ -59,7 +59,9 @@ export function AppShell({
                     className="text-slate-600 hover:text-slate-900"
                   >
                     <Shield className="w-4 h-4 mr-1" />
-                    <span className="hidden sm:inline">{t("common_privacy")}</span>
+                    <span className="hidden sm:inline">
+                      {t("common_privacy")}
+                    </span>
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
@@ -71,7 +73,9 @@ export function AppShell({
                   </DialogHeader>
                   <div className="space-y-4 text-sm text-slate-700">
                     <p>
-                      <strong>{t("privacy_dialog_what_we_dont_collect")}</strong>{" "}
+                      <strong>
+                        {t("privacy_dialog_what_we_dont_collect")}
+                      </strong>{" "}
                       {t("privacy_dialog_what_we_dont_collect_desc")}
                     </p>
                     <p>
@@ -94,7 +98,9 @@ export function AppShell({
                     className="text-slate-600 hover:text-slate-900"
                   >
                     <FileWarning className="w-4 h-4 mr-1" />
-                    <span className="hidden sm:inline">{t("common_disclaimer")}</span>
+                    <span className="hidden sm:inline">
+                      {t("common_disclaimer")}
+                    </span>
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
@@ -122,7 +128,10 @@ export function AppShell({
                   variant="secondary"
                   className="bg-slate-100 text-slate-700"
                 >
-                  {t("common_step_of", { current: currentStep.toString(), total: totalSteps.toString() })}
+                  {t("common_step_of", {
+                    current: currentStep.toString(),
+                    total: totalSteps.toString(),
+                  })}
                 </Badge>
               </div>
               <Progress value={progress} className="h-1.5" />

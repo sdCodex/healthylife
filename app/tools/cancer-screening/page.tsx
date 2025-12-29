@@ -2,18 +2,29 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Footer } from "@/components/footer";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useI18n } from "@/lib/i18n-context";
-import { 
+import {
   Heart,
   ChevronLeft,
   AlertTriangle,
@@ -22,14 +33,20 @@ import {
   Info,
   RefreshCw,
   ArrowRight,
-  Ribbon
+  Ribbon,
 } from "lucide-react";
 
 const GENERAL_SYMPTOMS = [
-  { id: "non_healing_ulcer", label: "Non-healing ulcer (wound that doesn't heal for more than 2 weeks)" },
+  {
+    id: "non_healing_ulcer",
+    label: "Non-healing ulcer (wound that doesn't heal for more than 2 weeks)",
+  },
   { id: "lumps", label: "Lumps or swellings anywhere in the body" },
   { id: "difficulty_swallowing", label: "Difficulty swallowing" },
-  { id: "voice_change", label: "Change in voice (hoarseness lasting more than 2 weeks)" },
+  {
+    id: "voice_change",
+    label: "Change in voice (hoarseness lasting more than 2 weeks)",
+  },
   { id: "weight_loss", label: "Unexplained weight loss" },
   { id: "blood_sputum", label: "Blood in sputum (coughed-up mucus)" },
   { id: "persistent_cough", label: "Persistent cough (more than 2 weeks)" },
@@ -37,7 +54,10 @@ const GENERAL_SYMPTOMS = [
 
 const WOMEN_SYMPTOMS = [
   { id: "breast_lump", label: "Lump in the breast" },
-  { id: "nipple_discharge", label: "Nipple discharge (other than breast milk)" },
+  {
+    id: "nipple_discharge",
+    label: "Nipple discharge (other than breast milk)",
+  },
   { id: "breast_shape", label: "Change in breast shape or size" },
   { id: "postmenopausal_bleeding", label: "Bleeding after menopause" },
   { id: "bleeding_intercourse", label: "Bleeding after intercourse" },
@@ -45,31 +65,36 @@ const WOMEN_SYMPTOMS = [
 
 export default function CancerScreeningPage() {
   const [gender, setGender] = useState<"male" | "female" | null>(null);
-  const [generalSymptoms, setGeneralSymptoms] = useState<Record<string, boolean>>({});
-  const [womenSymptoms, setWomenSymptoms] = useState<Record<string, boolean>>({});
+  const [generalSymptoms, setGeneralSymptoms] = useState<
+    Record<string, boolean>
+  >({});
+  const [womenSymptoms, setWomenSymptoms] = useState<Record<string, boolean>>(
+    {}
+  );
   const [showResult, setShowResult] = useState(false);
   const { t } = useI18n();
 
   const showWomenSection = gender === "female";
 
-  const hasAnySymptom = 
-    Object.values(generalSymptoms).some(v => v) || 
-    Object.values(womenSymptoms).some(v => v);
+  const hasAnySymptom =
+    Object.values(generalSymptoms).some((v) => v) ||
+    Object.values(womenSymptoms).some((v) => v);
 
-  const allQuestionsAnswered = 
+  const allQuestionsAnswered =
     gender !== null &&
-    GENERAL_SYMPTOMS.every(s => generalSymptoms[s.id] !== undefined) &&
-    (!showWomenSection || WOMEN_SYMPTOMS.every(s => womenSymptoms[s.id] !== undefined));
+    GENERAL_SYMPTOMS.every((s) => generalSymptoms[s.id] !== undefined) &&
+    (!showWomenSection ||
+      WOMEN_SYMPTOMS.every((s) => womenSymptoms[s.id] !== undefined));
 
   const handleSymptomChange = (
-    id: string, 
-    value: boolean, 
+    id: string,
+    value: boolean,
     isWomen: boolean = false
   ) => {
     if (isWomen) {
-      setWomenSymptoms(prev => ({ ...prev, [id]: value }));
+      setWomenSymptoms((prev) => ({ ...prev, [id]: value }));
     } else {
-      setGeneralSymptoms(prev => ({ ...prev, [id]: value }));
+      setGeneralSymptoms((prev) => ({ ...prev, [id]: value }));
     }
     setShowResult(false);
   };
@@ -100,7 +125,10 @@ export default function CancerScreeningPage() {
               </span>
             </Link>
             <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="bg-purple-100 text-purple-700 border-purple-200">
+              <Badge
+                variant="secondary"
+                className="bg-purple-100 text-purple-700 border-purple-200"
+              >
                 <Ribbon className="w-3 h-3 mr-1" />
                 {t("tool_cancer_badge")}
               </Badge>
@@ -111,7 +139,10 @@ export default function CancerScreeningPage() {
       </header>
 
       <main className="max-w-xl mx-auto px-4 py-8">
-        <Link href="/" className="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 mb-6">
+        <Link
+          href="/"
+          className="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 mb-6"
+        >
           <ChevronLeft className="w-4 h-4 mr-1" />
           {t("common_back_to_home")}
         </Link>
@@ -125,15 +156,15 @@ export default function CancerScreeningPage() {
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 mb-2">
               {t("tool_cancer_title")}
             </h1>
-            <p className="text-slate-600">
-              {t("tool_cancer_subtitle")}
-            </p>
+            <p className="text-slate-600">{t("tool_cancer_subtitle")}</p>
           </div>
 
           {/* Gender Selection */}
           <Card className="bg-white border-slate-200 shadow-lg">
             <CardHeader>
-              <CardTitle className="text-lg">{t("tool_cancer_gender_title")}</CardTitle>
+              <CardTitle className="text-lg">
+                {t("tool_cancer_gender_title")}
+              </CardTitle>
               <CardDescription>
                 {t("tool_cancer_gender_description")}
               </CardDescription>
@@ -153,7 +184,9 @@ export default function CancerScreeningPage() {
                   }`}
                 >
                   <span className="text-2xl mb-2 block">👨</span>
-                  <span className={`font-medium ${gender === "male" ? "text-purple-700" : "text-slate-700"}`}>
+                  <span
+                    className={`font-medium ${gender === "male" ? "text-purple-700" : "text-slate-700"}`}
+                  >
                     {t("step1_gender_male")}
                   </span>
                 </button>
@@ -169,7 +202,9 @@ export default function CancerScreeningPage() {
                   }`}
                 >
                   <span className="text-2xl mb-2 block">👩</span>
-                  <span className={`font-medium ${gender === "female" ? "text-purple-700" : "text-slate-700"}`}>
+                  <span
+                    className={`font-medium ${gender === "female" ? "text-purple-700" : "text-slate-700"}`}
+                  >
                     {t("step1_gender_female")}
                   </span>
                 </button>
@@ -201,8 +236,16 @@ export default function CancerScreeningPage() {
                         {symptom.label}
                       </Label>
                       <RadioGroup
-                        value={generalSymptoms[symptom.id] === true ? "yes" : generalSymptoms[symptom.id] === false ? "no" : ""}
-                        onValueChange={(v) => handleSymptomChange(symptom.id, v === "yes")}
+                        value={
+                          generalSymptoms[symptom.id] === true
+                            ? "yes"
+                            : generalSymptoms[symptom.id] === false
+                              ? "no"
+                              : ""
+                        }
+                        onValueChange={(v) =>
+                          handleSymptomChange(symptom.id, v === "yes")
+                        }
                         className="flex gap-2"
                       >
                         <label
@@ -253,8 +296,16 @@ export default function CancerScreeningPage() {
                           {symptom.label}
                         </Label>
                         <RadioGroup
-                          value={womenSymptoms[symptom.id] === true ? "yes" : womenSymptoms[symptom.id] === false ? "no" : ""}
-                          onValueChange={(v) => handleSymptomChange(symptom.id, v === "yes", true)}
+                          value={
+                            womenSymptoms[symptom.id] === true
+                              ? "yes"
+                              : womenSymptoms[symptom.id] === false
+                                ? "no"
+                                : ""
+                          }
+                          onValueChange={(v) =>
+                            handleSymptomChange(symptom.id, v === "yes", true)
+                          }
                           className="flex gap-2"
                         >
                           <label
@@ -286,7 +337,7 @@ export default function CancerScreeningPage() {
 
               {/* Check Button */}
               <div className="flex gap-3">
-                <Button 
+                <Button
                   onClick={handleCheck}
                   disabled={!allQuestionsAnswered}
                   className="flex-1 bg-purple-600 hover:bg-purple-700"
@@ -309,7 +360,9 @@ export default function CancerScreeningPage() {
               {hasAnySymptom ? (
                 <Alert className="bg-rose-50 border-rose-200">
                   <AlertTriangle className="h-5 w-5 text-rose-600" />
-                  <AlertTitle className="text-rose-900 font-semibold">{t("tool_cancer_consult_title")}</AlertTitle>
+                  <AlertTitle className="text-rose-900 font-semibold">
+                    {t("tool_cancer_consult_title")}
+                  </AlertTitle>
                   <AlertDescription className="text-rose-800">
                     <p className="mb-3">
                       {t("tool_cancer_consult_description")}
@@ -326,7 +379,9 @@ export default function CancerScreeningPage() {
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="w-6 h-6 text-emerald-600 mt-0.5" />
                       <div>
-                        <p className="font-semibold text-emerald-900 text-lg">{t("tool_cancer_no_symptoms_title")}</p>
+                        <p className="font-semibold text-emerald-900 text-lg">
+                          {t("tool_cancer_no_symptoms_title")}
+                        </p>
                         <p className="text-sm text-emerald-800 mt-1">
                           {t("tool_cancer_no_symptoms_description")}
                         </p>
@@ -340,7 +395,11 @@ export default function CancerScreeningPage() {
 
           {/* Self-breast exam info for women */}
           {gender === "female" && (
-            <Accordion type="single" collapsible className="bg-white border border-slate-200 rounded-lg shadow-lg">
+            <Accordion
+              type="single"
+              collapsible
+              className="bg-white border border-slate-200 rounded-lg shadow-lg"
+            >
               <AccordionItem value="breast-exam" className="border-0">
                 <AccordionTrigger className="px-4 py-3 text-sm font-medium text-slate-900 hover:no-underline">
                   <div className="flex items-center gap-2">
@@ -350,7 +409,9 @@ export default function CancerScreeningPage() {
                 </AccordionTrigger>
                 <AccordionContent className="px-4 pb-4 text-sm text-slate-700">
                   <div className="space-y-3">
-                    <p className="font-medium">{t("tool_cancer_breast_exam_subtitle")}</p>
+                    <p className="font-medium">
+                      {t("tool_cancer_breast_exam_subtitle")}
+                    </p>
                     <ol className="list-decimal list-inside space-y-2">
                       <li>{t("tool_cancer_breast_exam_step1")}</li>
                       <li>{t("tool_cancer_breast_exam_step2")}</li>
@@ -375,7 +436,9 @@ export default function CancerScreeningPage() {
           {/* Info Alert */}
           <Alert className="bg-slate-100 border-slate-200">
             <Info className="h-4 w-4 text-slate-600" />
-            <AlertTitle className="text-slate-800">{t("tool_cancer_about_title")}</AlertTitle>
+            <AlertTitle className="text-slate-800">
+              {t("tool_cancer_about_title")}
+            </AlertTitle>
             <AlertDescription className="text-slate-600">
               {t("tool_cancer_about_description")}
             </AlertDescription>
@@ -392,7 +455,10 @@ export default function CancerScreeningPage() {
                   {t("tool_cancer_cta_description")}
                 </p>
                 <Link href="/assessment/step-1">
-                  <Button variant="secondary" className="bg-white text-emerald-700 hover:bg-emerald-50 gap-2">
+                  <Button
+                    variant="secondary"
+                    className="bg-white text-emerald-700 hover:bg-emerald-50 gap-2"
+                  >
                     {t("tool_cta_button")}
                     <ArrowRight className="w-4 h-4" />
                   </Button>

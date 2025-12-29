@@ -199,10 +199,6 @@ export default function Step4Page() {
         sugarTips,
         activityTips,
       });
-
-      toast.success(t("step4_download_success"), {
-        description: t("step4_download_success_desc"),
-      });
     } catch {
       toast.error(t("step4_download_error"), {
         description: t("step4_download_error_desc"),

@@ -103,7 +103,9 @@ export default function LandingPage() {
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 mb-6">
               {t("hero_title")}
-              <span className="block text-emerald-600">{t("hero_title_highlight")}</span>
+              <span className="block text-emerald-600">
+                {t("hero_title_highlight")}
+              </span>
             </h1>
             <p className="text-lg md:text-xl text-slate-600 mb-8 leading-relaxed">
               {t("hero_description")}
@@ -136,10 +138,26 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto px-4 pb-16">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { icon: Clock, label: t("stats_quick_desc"), value: t("stats_quick") },
-              { icon: Shield, label: t("stats_secure_desc"), value: t("stats_secure") },
-              { icon: Calculator, label: t("stats_free_desc"), value: t("stats_free") },
-              { icon: Users, label: t("stats_easy_desc"), value: t("stats_easy") },
+              {
+                icon: Clock,
+                label: t("stats_quick_desc"),
+                value: t("stats_quick"),
+              },
+              {
+                icon: Shield,
+                label: t("stats_secure_desc"),
+                value: t("stats_secure"),
+              },
+              {
+                icon: Calculator,
+                label: t("stats_free_desc"),
+                value: t("stats_free"),
+              },
+              {
+                icon: Users,
+                label: t("stats_easy_desc"),
+                value: t("stats_easy"),
+              },
             ].map((stat, i) => (
               <div
                 key={i}
@@ -188,7 +206,8 @@ export default function LandingPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center text-emerald-700 font-medium group-hover:gap-2 transition-all">
-                    {t("tool_bmi_cta")} <ChevronRight className="w-4 h-4 ml-1" />
+                    {t("tool_bmi_cta")}{" "}
+                    <ChevronRight className="w-4 h-4 ml-1" />
                   </div>
                 </CardContent>
               </Card>
@@ -232,7 +251,8 @@ export default function LandingPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center text-amber-700 font-medium group-hover:gap-2 transition-all">
-                    {t("tool_sugar_cta")} <ChevronRight className="w-4 h-4 ml-1" />
+                    {t("tool_sugar_cta")}{" "}
+                    <ChevronRight className="w-4 h-4 ml-1" />
                   </div>
                 </CardContent>
               </Card>
@@ -245,14 +265,17 @@ export default function LandingPage() {
                   <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center mb-4 shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform">
                     <Ribbon className="w-7 h-7 text-white" />
                   </div>
-                  <CardTitle className="text-xl text-slate-900">{t("tool_cancer_title")}</CardTitle>
+                  <CardTitle className="text-xl text-slate-900">
+                    {t("tool_cancer_title")}
+                  </CardTitle>
                   <CardDescription className="text-slate-600">
                     {t("tool_cancer_description")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center text-purple-700 font-medium group-hover:gap-2 transition-all">
-                    {t("tool_cancer_cta")} <ChevronRight className="w-4 h-4 ml-1" />
+                    {t("tool_cancer_cta")}{" "}
+                    <ChevronRight className="w-4 h-4 ml-1" />
                   </div>
                 </CardContent>
               </Card>
@@ -265,14 +288,17 @@ export default function LandingPage() {
                   <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center mb-4 shadow-lg shadow-sky-500/30 group-hover:scale-110 transition-transform">
                     <IdCard className="w-7 h-7 text-white" />
                   </div>
-                  <CardTitle className="text-xl text-slate-900">{t("tool_uhid_title")}</CardTitle>
+                  <CardTitle className="text-xl text-slate-900">
+                    {t("tool_uhid_title")}
+                  </CardTitle>
                   <CardDescription className="text-slate-600">
                     {t("tool_uhid_description")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center text-sky-700 font-medium group-hover:gap-2 transition-all">
-                    {t("tool_uhid_cta")} <ChevronRight className="w-4 h-4 ml-1" />
+                    {t("tool_uhid_cta")}{" "}
+                    <ChevronRight className="w-4 h-4 ml-1" />
                   </div>
                 </CardContent>
               </Card>
@@ -285,14 +311,17 @@ export default function LandingPage() {
                   <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center mb-4 shadow-lg shadow-teal-500/30 group-hover:scale-110 transition-transform">
                     <Building2 className="w-7 h-7 text-white" />
                   </div>
-                  <CardTitle className="text-xl text-slate-900">{t("tool_jak_title")}</CardTitle>
+                  <CardTitle className="text-xl text-slate-900">
+                    {t("tool_jak_title")}
+                  </CardTitle>
                   <CardDescription className="text-slate-600">
                     {t("tool_jak_description")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center text-teal-700 font-medium group-hover:gap-2 transition-all">
-                    {t("tool_jak_cta")} <ChevronRight className="w-4 h-4 ml-1" />
+                    {t("tool_jak_cta")}{" "}
+                    <ChevronRight className="w-4 h-4 ml-1" />
                   </div>
                 </CardContent>
               </Card>
@@ -357,8 +386,12 @@ export default function LandingPage() {
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
                     <ClipboardCheck className="w-8 h-8 text-white" />
                   </div>
-                  <CardTitle className="text-2xl">{t("assessment_card_title")}</CardTitle>
-                  <CardDescription>{t("assessment_card_subtitle")}</CardDescription>
+                  <CardTitle className="text-2xl">
+                    {t("assessment_card_title")}
+                  </CardTitle>
+                  <CardDescription>
+                    {t("assessment_card_subtitle")}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {[
@@ -454,7 +487,9 @@ export default function LandingPage() {
           <Separator className="my-8 bg-slate-800" />
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-sm text-center md:text-left">
-              {t("footer_copyright", { year: new Date().getFullYear().toString() })}
+              {t("footer_copyright", {
+                year: new Date().getFullYear().toString(),
+              })}
             </p>
             <div className="flex items-center gap-4">
               <Link

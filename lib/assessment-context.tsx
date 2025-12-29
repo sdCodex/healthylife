@@ -243,7 +243,10 @@ export function isBPElevated(
   if (!systolic || !diastolic) return false;
   if (systolic >= 180 || diastolic >= 120) return true;
   if (systolic >= 160 || diastolic >= 100) return true;
-  if ((systolic >= 140 && systolic <= 159) || (diastolic >= 90 && diastolic <= 99))
+  if (
+    (systolic >= 140 && systolic <= 159) ||
+    (diastolic >= 90 && diastolic <= 99)
+  )
     return true;
   if (systolic < 90 || diastolic < 60) return true;
   return false;
@@ -256,11 +259,13 @@ export function isSugarElevated(
 ): boolean {
   if (!type || !value) return false;
   const thresholds = SUGAR_THRESHOLDS[type];
-  
+
   if ("diabetes" in thresholds && value >= thresholds.diabetes) return true;
-  if ("prediabetes" in thresholds && value >= thresholds.prediabetes) return true;
-  if ("hypoglycaemia" in thresholds && value < thresholds.hypoglycaemia) return true;
-  
+  if ("prediabetes" in thresholds && value >= thresholds.prediabetes)
+    return true;
+  if ("hypoglycaemia" in thresholds && value < thresholds.hypoglycaemia)
+    return true;
+
   return false;
 }
 
@@ -271,11 +276,14 @@ export function getBPStatus(
 ): { label: string; color: string } {
   if (!systolic || !diastolic) return { label: "Not entered", color: "slate" };
 
-  if (systolic >= 180 || diastolic >= 120) 
+  if (systolic >= 180 || diastolic >= 120)
     return { label: "Hypertensive Crisis", color: "rose" };
   if (systolic >= 160 || diastolic >= 100)
     return { label: "Stage 2 Hypertension", color: "rose" };
-  if ((systolic >= 140 && systolic <= 159) || (diastolic >= 90 && diastolic <= 99))
+  if (
+    (systolic >= 140 && systolic <= 159) ||
+    (diastolic >= 90 && diastolic <= 99)
+  )
     return { label: "Stage 1 Hypertension", color: "amber" };
   if (systolic < 140 && diastolic < 90 && systolic >= 90 && diastolic >= 60)
     return { label: "Normal", color: "emerald" };

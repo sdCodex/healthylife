@@ -83,9 +83,7 @@ export default function Step1Page() {
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">
             {t("step1_title")}
           </h1>
-          <p className="text-sm text-slate-600 mt-1">
-            {t("step1_subtitle")}
-          </p>
+          <p className="text-sm text-slate-600 mt-1">{t("step1_subtitle")}</p>
         </div>
 
         <Card className="bg-white border border-slate-200 shadow-sm">
@@ -93,16 +91,15 @@ export default function Step1Page() {
             <CardTitle className="text-base font-semibold">
               {t("step1_card_title")}
             </CardTitle>
-            <CardDescription>
-              {t("step1_card_description")}
-            </CardDescription>
+            <CardDescription>{t("step1_card_description")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Age */}
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Label htmlFor="age" className="text-sm font-medium">
-                  {t("step1_age_label")} <span className="text-rose-500">*</span>
+                  {t("step1_age_label")}{" "}
+                  <span className="text-rose-500">*</span>
                 </Label>
                 <TooltipProvider>
                   <Tooltip>
@@ -132,9 +129,7 @@ export default function Step1Page() {
                   {errors.age}
                 </p>
               )}
-              <p className="text-xs text-slate-500">
-                {t("step1_age_helper")}
-              </p>
+              <p className="text-xs text-slate-500">{t("step1_age_helper")}</p>
             </div>
 
             {showUnderageAlert && (
@@ -148,7 +143,9 @@ export default function Step1Page() {
 
             {/* Gender */}
             <div className="space-y-3">
-              <Label className="text-sm font-medium">{t("step1_gender_label")}</Label>
+              <Label className="text-sm font-medium">
+                {t("step1_gender_label")}
+              </Label>
               <RadioGroup
                 value={gender || ""}
                 onValueChange={(value) => setGender(value as Gender)}

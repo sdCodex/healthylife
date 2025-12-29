@@ -43,7 +43,10 @@ export default function Step5Page() {
       label: t("step5_symptom_non_healing_ulcer"),
     },
     { id: "lumps", label: t("step5_symptom_lumps") },
-    { id: "difficulty_swallowing", label: t("step5_symptom_difficulty_swallowing") },
+    {
+      id: "difficulty_swallowing",
+      label: t("step5_symptom_difficulty_swallowing"),
+    },
     {
       id: "voice_change",
       label: t("step5_symptom_voice_change"),
@@ -60,8 +63,14 @@ export default function Step5Page() {
       label: t("step5_symptom_nipple_discharge"),
     },
     { id: "breast_shape", label: t("step5_symptom_breast_shape") },
-    { id: "postmenopausal_bleeding", label: t("step5_symptom_postmenopausal_bleeding") },
-    { id: "bleeding_intercourse", label: t("step5_symptom_bleeding_intercourse") },
+    {
+      id: "postmenopausal_bleeding",
+      label: t("step5_symptom_postmenopausal_bleeding"),
+    },
+    {
+      id: "bleeding_intercourse",
+      label: t("step5_symptom_bleeding_intercourse"),
+    },
   ];
 
   const [generalSymptoms, setGeneralSymptoms] = useState<
@@ -104,9 +113,7 @@ export default function Step5Page() {
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">
             {t("step5_title")}
           </h1>
-          <p className="text-sm text-slate-600 mt-1">
-            {t("step5_subtitle")}
-          </p>
+          <p className="text-sm text-slate-600 mt-1">{t("step5_subtitle")}</p>
         </div>
 
         {/* General Symptoms */}
@@ -174,7 +181,9 @@ export default function Step5Page() {
               <CardTitle className="text-base font-semibold">
                 {t("step5_women_symptoms_title")}
               </CardTitle>
-              <CardDescription>{t("step5_women_symptoms_description")}</CardDescription>
+              <CardDescription>
+                {t("step5_women_symptoms_description")}
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               {WOMEN_SYMPTOMS.map((symptom) => (
@@ -270,9 +279,7 @@ export default function Step5Page() {
               </AccordionTrigger>
               <AccordionContent className="px-4 pb-4 text-sm text-slate-700">
                 <div className="space-y-3">
-                  <p className="font-medium">
-                    {t("step5_breast_exam_how_to")}
-                  </p>
+                  <p className="font-medium">{t("step5_breast_exam_how_to")}</p>
                   <ol className="list-decimal list-inside space-y-2">
                     <li>{t("step5_breast_exam_step_1")}</li>
                     <li>{t("step5_breast_exam_step_2")}</li>

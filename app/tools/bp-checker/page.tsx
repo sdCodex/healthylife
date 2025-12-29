@@ -214,9 +214,7 @@ export default function BPCheckerPage() {
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 mb-2">
               {t("tool_bp_title")}
             </h1>
-            <p className="text-slate-600">
-              {t("tool_bp_subtitle")}
-            </p>
+            <p className="text-slate-600">{t("tool_bp_subtitle")}</p>
           </div>
 
           {/* Input Card */}
@@ -226,9 +224,7 @@ export default function BPCheckerPage() {
                 <HeartPulse className="w-5 h-5 text-rose-600" />
                 {t("tool_bp_enter_reading")}
               </CardTitle>
-              <CardDescription>
-                {t("tool_bp_card_description")}
-              </CardDescription>
+              <CardDescription>{t("tool_bp_card_description")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
@@ -297,7 +293,8 @@ export default function BPCheckerPage() {
             <Card
               className={cn(
                 "border-2",
-                result.color === "emerald" && "border-emerald-200 bg-emerald-50",
+                result.color === "emerald" &&
+                  "border-emerald-200 bg-emerald-50",
                 result.color === "amber" && "border-amber-200 bg-amber-50",
                 result.color === "rose" && "border-rose-200 bg-rose-50"
               )}
@@ -305,7 +302,9 @@ export default function BPCheckerPage() {
               <CardContent className="pt-6">
                 <div className="text-center space-y-4">
                   <div>
-                    <p className="text-sm text-slate-600 mb-1">{t("tool_bp_your_reading")}</p>
+                    <p className="text-sm text-slate-600 mb-1">
+                      {t("tool_bp_your_reading")}
+                    </p>
                     <p className="text-4xl font-bold tabular-nums text-slate-900">
                       {systolic}/{diastolic}
                       <span className="text-lg font-normal text-slate-500 ml-2">
@@ -373,8 +372,12 @@ export default function BPCheckerPage() {
               <div className="space-y-2 text-sm">
                 <div className="grid grid-cols-3 text-xs text-slate-500 pb-2 border-b">
                   <span>{t("tool_bp_category")}</span>
-                  <span className="text-center">{t("tool_bp_systolic_header")}</span>
-                  <span className="text-center">{t("tool_bp_diastolic_header")}</span>
+                  <span className="text-center">
+                    {t("tool_bp_systolic_header")}
+                  </span>
+                  <span className="text-center">
+                    {t("tool_bp_diastolic_header")}
+                  </span>
                 </div>
                 {BP_CATEGORIES.map((cat) => (
                   <div
@@ -425,9 +428,7 @@ export default function BPCheckerPage() {
           <Card className="bg-gradient-to-br from-emerald-500 to-teal-600 border-0 text-white">
             <CardContent className="pt-6">
               <div className="text-center space-y-4">
-                <h3 className="text-xl font-semibold">
-                  {t("tool_cta_title")}
-                </h3>
+                <h3 className="text-xl font-semibold">{t("tool_cta_title")}</h3>
                 <p className="text-emerald-100 text-sm">
                   {t("tool_cta_description")}
                 </p>
