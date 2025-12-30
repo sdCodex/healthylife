@@ -271,7 +271,7 @@ export default function FindJAKPage() {
             <p className="text-slate-600">{t("tool_jak_subtitle")}</p>
             {hasData && (
               <p className="text-sm text-teal-600 mt-2 font-medium">
-                {jakData.length} JAKs available across Kerala
+                {jakData.length - 1} JAKs available across Kerala
               </p>
             )}
           </div>
