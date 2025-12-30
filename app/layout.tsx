@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/hl-og.png",
+        url: "https://health.kerala.care/hl-og.png",
         width: 1200,
         height: 630,
         alt: "Healthy Life Campaign - Eat well · Act well · Sleep well · Care well",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: "Healthy Life Campaign - Health Risk Assessment",
     description:
       "Check your health risks in 5 minutes. Free, private health risk assessment tool.",
-    images: ["/hl-og.png"],
+    images: ["https://health.kerala.care/hl-og.png"],
   },
   keywords: [
     "health assessment",
