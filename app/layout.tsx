@@ -30,6 +30,15 @@ export const metadata: Metadata = {
   description:
     "Check your health risks in 5 minutes. A free, private health risk assessment tool.",
   metadataBase: new URL("https://health.kerala.care"),
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
+    ],
+    apple: [
+      { url: "/apple-icon.svg", type: "image/svg+xml" },
+    ],
+  },
   openGraph: {
     title: "Healthy Life Campaign - Health Risk Assessment",
     description:
@@ -38,21 +47,12 @@ export const metadata: Metadata = {
     siteName: "Healthy Life Campaign",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: "https://health.kerala.care/hl-og.png",
-        width: 1200,
-        height: 630,
-        alt: "Healthy Life Campaign - Eat well · Act well · Sleep well · Care well",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Healthy Life Campaign - Health Risk Assessment",
     description:
       "Check your health risks in 5 minutes. Free, private health risk assessment tool.",
-    images: ["https://health.kerala.care/hl-og.png"],
   },
   keywords: [
     "health assessment",
